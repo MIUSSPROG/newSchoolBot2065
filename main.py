@@ -124,18 +124,18 @@ def show_task(n, message, sti, task_text):
 
     if n == -1:
         fullname = 'true'
-    else:
-        if sti is not None:
-            bot.send_photo(message.chat.id, sti)
-        bot.send_message(message.from_user.id, text=task_text)
 
-        keyboard = types.InlineKeyboardMarkup()
-        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
-        keyboard.add(key_yes)
-        key_no = types.InlineKeyboardButton(text='Нет', callback_data='no')
-        keyboard.add(key_no)
-        bot.send_message(message.from_user.id, text="Готовы ответить?", reply_markup=keyboard)
-        num = n
+    if sti is not None:
+        bot.send_photo(message.chat.id, sti)
+    bot.send_message(message.from_user.id, text=task_text)
+
+    keyboard = types.InlineKeyboardMarkup()
+    key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
+    keyboard.add(key_yes)
+    key_no = types.InlineKeyboardButton(text='Нет', callback_data='no')
+    keyboard.add(key_no)
+    bot.send_message(message.from_user.id, text="Готовы ответить?", reply_markup=keyboard)
+    num = n
 
 
 def get_answer(message):
