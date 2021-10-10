@@ -24,26 +24,25 @@ default_app = firebase_admin.initialize_app(cred, {
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    try:
-        bot.send_message(message.from_user.id,
-                         "✋ Добро пожаловать в систему проверки знаний ГБОУ Школа 2065!")
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        item0 = types.KeyboardButton('Введите ФИО и класс')
-        item1 = types.KeyboardButton('1')
-        item2 = types.KeyboardButton('2')
-        item3 = types.KeyboardButton('3')
-        item4 = types.KeyboardButton('4')
-        item5 = types.KeyboardButton('5')
-        item6 = types.KeyboardButton('6')
-        item7 = types.KeyboardButton('7')
-        item8 = types.KeyboardButton('8')
-        item9 = types.KeyboardButton('9')
-        markup.add(item0, item1, item2, item3, item4, item5, item6, item7, item8, item9)
-        bot.send_message(message.chat.id,
-                         'Привет, {0.first_name}! Выбери номер задачи'.format(message.from_user),
-                         reply_markup=markup)
-    except Exception as ex:
-        print(ex)
+
+    bot.send_message(message.from_user.id,
+                     "✋ Добро пожаловать в систему проверки знаний ГБОУ Школа 2065!")
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item0 = types.KeyboardButton('Введите ФИО и класс')
+    item1 = types.KeyboardButton('1')
+    item2 = types.KeyboardButton('2')
+    item3 = types.KeyboardButton('3')
+    item4 = types.KeyboardButton('4')
+    item5 = types.KeyboardButton('5')
+    item6 = types.KeyboardButton('6')
+    item7 = types.KeyboardButton('7')
+    item8 = types.KeyboardButton('8')
+    item9 = types.KeyboardButton('9')
+    markup.add(item0, item1, item2, item3, item4, item5, item6, item7, item8, item9)
+    bot.send_message(message.chat.id,
+                     'Привет, {0.first_name}! Выбери номер задачи'.format(message.from_user),
+                     reply_markup=markup)
+
 
 
 @server.route('/' + TOKEN, methods=['POST'])
