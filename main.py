@@ -123,7 +123,7 @@ def show_task(n, message, sti, task_text):
     global fullname
 
     if n == -1:
-        fullname = message.from_user.id
+        fullname = message.text
     else:
         if sti is not None:
             bot.send_photo(message.chat.id, sti)
