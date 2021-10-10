@@ -15,6 +15,7 @@ bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
 fullname = ''
+task_text_to_answer = ''
 
 cred = credentials.Certificate("schooltrainitskills-firebase-adminsdk-2k8f3-da15def773.json")
 
@@ -121,6 +122,9 @@ def callback_worker(call):
 def show_task(n, message, sti, task_text):
     global num
     global fullname
+    global task_text_to_answer
+
+    task_text_to_answer = task_text
 
     if n == -1:
         fullname = 'true'
@@ -142,6 +146,7 @@ def get_answer(message):
     global answer
     global userName
     global fullname
+    global task_text_to_answer
 
     if fullname == 'true':
         fullname = message.text
@@ -149,6 +154,7 @@ def get_answer(message):
         answer = message.text
         userName = message.from_user.first_name
         new_answer = {
+            "question": task_text_to_answer,
             "answer": answer
         }
         db.reference(f"schooltrainitskills-default-rtdb/{fullname if fullname != '' else userName}/" + str(num)).set(new_answer)
