@@ -14,12 +14,12 @@ APP_URL = f'https://trainin-it-skills-2065.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-# cred = credentials.Certificate("schooltrainitskills-firebase-adminsdk-2k8f3-da15def773.json")
-#
-# default_app = firebase_admin.initialize_app(cred, {
-#     'databaseURL': 'https://schooltrainitskills-default-rtdb.firebaseio.com/',
-#     'storageBucket': 'gs://schooltrainitskills.appspot.com/'
-# })
+cred = credentials.Certificate("schooltrainitskills-firebase-adminsdk-2k8f3-da15def773.json")
+
+default_app = firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://schooltrainitskills-default-rtdb.firebaseio.com/',
+    'storageBucket': 'gs://schooltrainitskills.appspot.com/'
+})
 
 
 @bot.message_handler(commands=['start'])
