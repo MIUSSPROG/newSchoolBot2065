@@ -14,6 +14,8 @@ APP_URL = f'https://trainin-it-skills-2065.herokuapp.com/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
+fullname = ''
+
 cred = credentials.Certificate("schooltrainitskills-firebase-adminsdk-2k8f3-da15def773.json")
 
 default_app = firebase_admin.initialize_app(cred, {
@@ -53,6 +55,9 @@ def bot_message(message):
             # sti = open('1.png', 'rb')
             task_text = 'Что такое декомпозиция?'
             show_task(1, message, None, task_text)
+        elif message.text == 'Введите ФИО и класс':
+            task_text = 'Введите ФИО и класс'
+            show_task(-1, message, None, task_text)
         elif message.text == '2':
             # sti = open('2.png', 'rb')
             task_text = 'Что такое СУБД?'
@@ -115,17 +120,22 @@ def callback_worker(call):
 
 def show_task(n, message, sti, task_text):
     global num
-    if sti is not None:
-        bot.send_photo(message.chat.id, sti)
-    bot.send_message(message.from_user.id, text=task_text)
+    global fullname
 
-    keyboard = types.InlineKeyboardMarkup()
-    key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
-    keyboard.add(key_yes)
-    key_no = types.InlineKeyboardButton(text='Нет', callback_data='no')
-    keyboard.add(key_no)
-    bot.send_message(message.from_user.id, text="Готовы ответить?", reply_markup=keyboard)
-    num = n
+    if n == -1:
+        fullname = message.from_user.id
+    else:
+        if sti is not None:
+            bot.send_photo(message.chat.id, sti)
+        bot.send_message(message.from_user.id, text=task_text)
+
+        keyboard = types.InlineKeyboardMarkup()
+        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
+        keyboard.add(key_yes)
+        key_no = types.InlineKeyboardButton(text='Нет', callback_data='no')
+        keyboard.add(key_no)
+        bot.send_message(message.from_user.id, text="Готовы ответить?", reply_markup=keyboard)
+        num = n
 
 
 def get_answer(message):
@@ -136,7 +146,7 @@ def get_answer(message):
     new_answer = {
         "answer": answer
     }
-    db.reference(f"schooltrainitskills-default-rtdb/{userName}/" + str(num)).set(new_answer)
+    db.reference(f"schooltrainitskills-default-rtdb/{fullname if fullname != '' else userName}/" + str(num)).set(new_answer)
     bot.send_message(message.chat.id, f"Ответ принят!")
     # if num == 1:
     #     if answer == 'zyxw':
