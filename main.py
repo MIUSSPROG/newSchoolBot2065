@@ -145,13 +145,14 @@ def get_answer(message):
 
     if fullname == 'true':
         fullname = message.text
-    answer = message.text
-    userName = message.from_user.first_name
-    new_answer = {
-        "answer": answer
-    }
-    db.reference(f"schooltrainitskills-default-rtdb/{fullname if fullname != '' else userName}/" + str(num)).set(new_answer)
-    bot.send_message(message.chat.id, f"Ответ принят!")
+    else:
+        answer = message.text
+        userName = message.from_user.first_name
+        new_answer = {
+            "answer": answer
+        }
+        db.reference(f"schooltrainitskills-default-rtdb/{fullname if fullname != '' else userName}/" + str(num)).set(new_answer)
+        bot.send_message(message.chat.id, f"Ответ принят!")
     # if num == 1:
     #     if answer == 'zyxw':
     #         new_answer1 = {
