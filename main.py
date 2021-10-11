@@ -149,19 +149,21 @@ def get_answer(message):
     global userName
     global fullname
     global task_text_to_answer
-
-    if fullname == 'true':
-        fullname = message.text
-    else:
-        fullname = userName
-        answer = message.text
-        userName = message.from_user.first_name
-        new_answer = {
-            "question": task_text_to_answer,
-            "answer": answer
-        }
-        db.reference(f"schooltrainitskills-default-rtdb/{fullname}/" + str(num)).set(new_answer)
-        bot.send_message(message.chat.id, f"Ответ принят!")
+    try:
+        if fullname == 'true':
+            fullname = message.text
+        else:
+            fullname = userName
+            answer = message.text
+            userName = message.from_user.first_name
+            new_answer = {
+                "question": task_text_to_answer,
+                "answer": answer
+            }
+            db.reference(f"schooltrainitskills-default-rtdb/{fullname}/" + str(num)).set(new_answer)
+            bot.send_message(message.chat.id, f"Ответ принят!")
+    except Exception as ex:
+        print(ex)
     # if num == 1:
     #     if answer == 'zyxw':
     #         new_answer1 = {
