@@ -128,6 +128,8 @@ def show_task(n, message, sti, task_text):
 
     if n == -1:
         fullname = 'true'
+    else:
+        fullname = 'false'
 
     if sti is not None:
         bot.send_photo(message.chat.id, sti)
