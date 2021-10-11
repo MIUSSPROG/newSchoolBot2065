@@ -41,7 +41,7 @@ def start(message):
     item7 = types.KeyboardButton('7')
     item8 = types.KeyboardButton('8')
     item9 = types.KeyboardButton('9')
-    markup.add(item0, item1, item2, item3, item4, item5, item6, item7, item8, item9)
+    markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9)
     bot.send_message(message.chat.id,
                      'Привет, {0.first_name}! Выбери номер задачи'.format(message.from_user),
                      reply_markup=markup)
@@ -56,9 +56,9 @@ def bot_message(message):
             # sti = open('1.png', 'rb')
             task_text = 'Что такое декомпозиция?'
             show_task(1, message, None, task_text)
-        elif message.text == 'Введите ФИО и класс':
-            task_text = 'Введите ФИО и класс'
-            show_task(-1, message, None, task_text)
+        # elif message.text == 'Введите ФИО и класс':
+        #     task_text = 'Введите ФИО и класс'
+        #     show_task(-1, message, None, task_text)
         elif message.text == '2':
             # sti = open('2.png', 'rb')
             task_text = 'Что такое СУБД?'
@@ -149,21 +149,21 @@ def get_answer(message):
     global userName
     global fullname
     global task_text_to_answer
-    try:
-        if fullname == 'true':
-            fullname = message.text
-        else:
-            fullname = userName
-            answer = message.text
-            userName = message.from_user.first_name
-            new_answer = {
-                "question": task_text_to_answer,
-                "answer": answer
-            }
-            db.reference(f"schooltrainitskills-default-rtdb/{fullname}/" + str(num)).set(new_answer)
-            bot.send_message(message.chat.id, f"Ответ принят!")
-    except Exception as ex:
-        print(ex)
+    # try:
+    #     if fullname == 'true':
+    #         fullname = message.text
+    #     else:
+    fullname = userName
+    answer = message.text
+    userName = message.from_user.first_name
+    new_answer = {
+        "question": task_text_to_answer,
+        "answer": answer
+    }
+    db.reference(f"schooltrainitskills-default-rtdb/{userName}/" + str(num)).set(new_answer)
+    bot.send_message(message.chat.id, f"Ответ принят!")
+    # except Exception as ex:
+    #     print(ex)
     # if num == 1:
     #     if answer == 'zyxw':
     #         new_answer1 = {
